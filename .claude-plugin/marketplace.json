@@ -1,0 +1,5 @@
+{
+  "name": "claude-app-theme",
+  "owner": { "name": "Rosan-Adrian" },
+  "plugins": [{ "name": "app-theme", "source": "./" }]
+}
