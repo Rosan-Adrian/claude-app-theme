@@ -107,7 +107,22 @@ const NORD = makeColors({
 })
 
 const { theme, problems } = { soft: SOFT, solarized: SOLARIZED, nord: NORD }[ACTIVE]
-const LOOK: ThemeSetArgs = { colors: theme }
+const COLORS_ONLY: ThemeSetArgs = { colors: theme }
+
+// Terminal look: set to false to keep the app's own font for the conversation.
+const TERMINAL_FONT = true
+
+// 'code' is the app's own code font (Settings > Code font), so messages read like the CLI.
+const LOOK: ThemeSetArgs = TERMINAL_FONT
+  ? {
+      ...COLORS_ONLY,
+      style: {
+        Text: { fontFamily: ['code'] },
+        Heading: { fontFamily: ['code'] },
+        ToolUse: { fontFamily: ['code'] },
+      },
+    }
+  : COLORS_ONLY
 
 export const register: Register = on => {
   on('session.start', async ($, e, next) => {
@@ -116,7 +131,15 @@ export const register: Register = on => {
     if (unpainted !== undefined) {
       $.ui.toast(unpainted)
     }
-    const set = await $.theme.set(LOOK)
+    let set
+
+    try {
+      set = await $.theme.set(LOOK)
+    } catch (error) {
+      // A build that doesn't take `style` throws: keep the colors without it.
+      $.ui.log(String(error))
+      set = await $.theme.set(COLORS_ONLY)
+    }
 
     if (!set.isDrawn) {
       $.ui.status(set.reason)

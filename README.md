@@ -10,6 +10,8 @@ Three themes are included:
 
 To switch, change `ACTIVE` at the top of `hooks/register.ts` to `'soft'`, `'solarized'` or `'nord'`.
 
+By default the conversation text uses the app's code font (Settings > Code font), for a terminal-like look. Set `TERMINAL_FONT` to `false` in `hooks/register.ts` to keep the app's own font.
+
 ## Install
 
 At the prompt of a terminal session:
