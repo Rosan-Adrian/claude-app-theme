@@ -2,12 +2,13 @@
 
 A whole-app color theme for the Claude desktop app. It recolors the entire interface, not just code blocks: backgrounds, panels, text, accents and syntax highlighting, in both light and dark mode.
 
-Two themes are included:
+Three themes are included:
 
-- **Solarized** (active by default): cream paper by day, deep teal by night, with Solarized code highlighting.
+- **Soft** (active by default): a GitHub-style dark palette with dimmed text, about 10:1 contrast instead of 17:1, to reduce the halo or "blooming" that bright white text on near-black causes for people with astigmatism or light sensitivity. Its light mode uses soft off-white surfaces with no pure white.
+- **Solarized**: cream paper by day, deep teal by night, with Solarized code highlighting.
 - **Nord**: Snow Storm by day, Polar Night by night, with Nord code highlighting.
 
-To switch, change `ACTIVE` at the top of `hooks/register.ts` to `'solarized'` or `'nord'`.
+To switch, change `ACTIVE` at the top of `hooks/register.ts` to `'soft'`, `'solarized'` or `'nord'`.
 
 ## Install
 

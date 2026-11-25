@@ -2,8 +2,44 @@ import type { Register, ThemeSetArgs } from 'claude-code'
 
 import { makeColors } from './make-colors.js'
 
-// Choose the active theme: 'solarized' or 'nord'.
-const ACTIVE: 'solarized' | 'nord' = 'solarized'
+// Choose the active theme: 'soft', 'solarized' or 'nord'.
+const ACTIVE = 'soft' as 'soft' | 'solarized' | 'nord'
+
+// Soft: a GitHub-style dark palette with dimmed text (about 10:1 instead of 17:1)
+// to cut the halo ("blooming") bright white text makes on near-black, and an
+// off-white light mode with no pure white.
+const SOFT = makeColors({
+  label: 'Soft',
+  roles: { accent: '#4493f8', danger: '#f85149', success: '#3fb950', warning: '#d29922', pro: '#a371f7' },
+  light: {
+    gray: {
+      anchors: {
+        'surface-0': '#e8ecf0',
+        'surface-1': '#eef1f4',
+        'surface-2': '#f3f5f7',
+        'surface-3': '#f3f5f7',
+        'text-primary': '#1f2328',
+        'text-secondary': '#424a53',
+        'text-muted': '#59636e',
+      },
+    },
+    roles: { accent: '#0969da', danger: '#cf222e', success: '#1a7f37', warning: '#9a6700', pro: '#8250df' },
+  },
+  dark: {
+    gray: {
+      anchors: {
+        'surface-0': '#0d1117',
+        'surface-1': '#12171e',
+        'surface-2': '#151b22',
+        'surface-3': '#171d25',
+        'text-primary': '#bcc4cc',
+        'text-secondary': '#9aa2ab',
+        'text-muted': '#848d97',
+      },
+    },
+  },
+  codeTheme: { light: 'github-light', dark: 'github-dark' },
+})
 
 const SOLARIZED = makeColors({
   label: 'Solarized',
@@ -70,7 +106,7 @@ const NORD = makeColors({
   codeTheme: { dark: 'nord' },
 })
 
-const { theme, problems } = ACTIVE === 'solarized' ? SOLARIZED : NORD
+const { theme, problems } = { soft: SOFT, solarized: SOLARIZED, nord: NORD }[ACTIVE]
 const LOOK: ThemeSetArgs = { colors: theme }
 
 export const register: Register = on => {
